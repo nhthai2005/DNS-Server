@@ -1,0 +1,56 @@
+Note : 
+	- Change lab.local = Your-Domain
+	- Change dns1.lab.local = Your-DNS-Server
+	- Change IP ( dns1 - www - mail ) = Your-IP-Server 
+
+* [ Step 2.3 ] - Create Forward zone
+
+zone "lab.local" IN {			// Domain name
+	type master;		// Primary DNS
+	file "forward.lab.local";	// Forward lookup file
+	allow-update { none; };	// allow-update – Since this is the primary DNS, it should be none
+};
+
+* [Step 2.4 ] - Create Reverse Zone
+
+zone "1.168.192.in-addr.arpa" IN {	// 1.168.192.in-addr.arpa – Reverse lookup name
+	type master;		// master – Primary DNS
+	file "reverse.lab.local"	// Reverse lookup file
+	allow-update { none; };	// Since this is the primary DNS, it should be none
+};
+
+* [Step 3.1 ] - Create file Foward
+
+@	IN	SOA	dns1.lab.local	root.lab.local.	(
+			1001	;Serial
+			3H	;Refresh
+			15M	;Retry
+			1W	;Exprie
+			1D	;Minimum TTL
+)
+;Name Server Information
+@	IN	NS	dns1.lab.local.	; NS : Name Server
+;A - Record Hostname to IP Address
+dns1	IN	A	192.168.1.8	; A - A Record ( DNS Server )
+www	IN	A	192.168.1.9	; A - A Record ( www Server )
+mail	IN	A	192.168.1.10	; A - A Record ( Mail Server )
+;Mail Exchanger
+lab.local.	IN	MX	10	mail.lab.local.	; MX - Mail for Exchange
+;CNAME	record
+ftp	IN	CNAME	www.lab.local.		; CNAME – Canonical Name
+
+* [ Step 3.2 ] - Create file Reveser "reverse.lab.local"
+
+@	IN	SOA	dns1.lab.local. root.lab.local.	(
+			1001	;Serial
+			3H	;Refresh
+			15M	;Retry
+			1W	;Expire
+			1D	;Minium TTL
+)
+;Name Server Information
+@	IN	NS	dns1.lab.local.
+;PTR Record IP address to Hostname
+8	IN	PTR	dns1.lab.local.	; Pointer 192.168.1.8 to dns1.lab.local 
+9	IN	PTR	www.lab.local.	; Pointer 192.168.1.9 to www.lab.local 
+10	IN	PTR	mail.lab.local.	; Pointer 192.168.1.19 to mail.lab.local 

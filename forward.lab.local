@@ -1,0 +1,17 @@
+@	IN	SOA	dns1.lab.local	root.lab.local.	(
+			1001	;Serial
+			3H	;Refresh
+			15M	;Retry
+			1W	;Exprie
+			1D	;Minimum TTL
+)
+;Name Server Information
+@	IN	NS	dns1.lab.local.	; NS : Name Server
+;A - Record Hostname to IP Address
+dns1	IN	A	192.168.1.17	; A - A Record ( DNS Server )
+www	    IN	A	172.16.10.220	; A - A Record ( www Server )
+mail	IN	A	172.16.10.221	; A - A Record ( Mail Server )
+;Mail Exchanger
+lab.local.	IN	MX	10	mail.lab.local.	; MX - Mail for Exchange
+;CNAME	record
+ftp	IN	CNAME	www.lab.local.		; CNAME – Canonical Name

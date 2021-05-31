@@ -1,0 +1,13 @@
+@	IN	SOA	dns1.lab.local. root.lab.local.	(
+			1001	;Serial
+			3H	;Refresh
+			15M	;Retry
+			1W	;Expire
+			1D	;Minium TTL
+)
+;Name Server Information
+@	IN	NS	dns1.lab.local.
+;PTR Record IP address to Hostname
+8	IN	PTR	dns1.lab.local.	; Pointer 192.168.1.17 to dns1.lab.local 
+9	IN	PTR	www.lab.local.	; Pointer 172.16.10.220 to www.lab.local 
+10	IN	PTR	mail.lab.local.	; Pointer 172.16.10.221 to mail.lab.local 
